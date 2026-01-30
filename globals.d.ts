@@ -5,6 +5,7 @@ declare global {
       DB_PORT: string;
       DB_NAME: string;
       DB_COLLECTION: string;
+      EXCLUSIONS: string;
     }
   }
 }

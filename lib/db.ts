@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb';
 
-const client = new MongoClient(`mongodb://${process.env.DB_ADDRESS}:${process.env.DB_PORT}`);
+const {DB_USER, DB_PASSWORD, DB_ADDRESS, DB_PORT, DB_NAME } = process.env;
+const client = new MongoClient(`mongodb://${DB_USER}:${DB_PASSWORD}@${DB_ADDRESS}:${DB_PORT}/${DB_NAME}`);
 
 async function connectToDB() {
   try { 

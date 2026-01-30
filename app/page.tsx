@@ -1,16 +1,35 @@
-import { getUsers } from "@/lib/db";
+import { analyzeUsers } from '@/lib/analytics';
 
 export default async function Home() {
-  const users = await getUsers();
-  console.log(users);
+  const stats = await analyzeUsers();
+  console.log(stats);
 
   return (
     <div>
-      <ul>
-        {users.map(user => (
-          <li key={user.name}>{user.name}</li>
-        )) }
-      </ul>
+      <table>
+        <tbody>
+          <tr>
+            <td>Registered users</td>
+            <td>{stats.userCount}</td>
+          </tr>
+            <tr>
+            <td>Verified users</td>
+            <td>{stats.verified}</td>
+          </tr>
+          <tr>
+            <td>Logged in</td>
+            <td>{stats.loggedIn}</td>
+          </tr>
+          <tr>
+            <td>Successful invites</td>
+            <td>{stats.inviters}</td>
+          </tr>
+          <tr>
+            <td>Invited users</td>
+            <td>{stats.invitees}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }
