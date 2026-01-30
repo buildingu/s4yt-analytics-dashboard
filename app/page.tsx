@@ -1,35 +1,9 @@
-import { analyzeUsers } from '@/lib/analytics';
+import { analyzeUsers, convertToChartData } from '@/lib/analytics';
+import Home from './Home';
 
-export default async function Home() {
+export default async function Page() {
   const stats = await analyzeUsers();
-  console.log(stats);
+  const chartData = convertToChartData(stats);
 
-  return (
-    <div>
-      <table>
-        <tbody>
-          <tr>
-            <td>Registered users</td>
-            <td>{stats.userCount}</td>
-          </tr>
-            <tr>
-            <td>Verified users</td>
-            <td>{stats.verified}</td>
-          </tr>
-          <tr>
-            <td>Logged in</td>
-            <td>{stats.loggedIn}</td>
-          </tr>
-          <tr>
-            <td>Successful invites</td>
-            <td>{stats.inviters}</td>
-          </tr>
-          <tr>
-            <td>Invited users</td>
-            <td>{stats.invitees}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
+  return <Home stats={stats} chartData={chartData}/>;
 }

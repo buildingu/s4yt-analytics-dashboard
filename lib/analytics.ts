@@ -2,6 +2,14 @@ import { getUsers } from './db';
 
 const exclusions = JSON.parse(process.env.EXCLUSIONS);
 
+export const labels: Record<string, string> = {
+  userCount: 'Registered user',
+  verified: 'Verified users',
+  loggedIn: 'Logged in',
+  inviters: 'Successful invites',
+  invitees: 'Invited users'
+}
+
 export async function analyzeUsers() {
   const stats = {
     userCount: 0,
@@ -33,4 +41,12 @@ export async function analyzeUsers() {
   } finally {
     return stats;
   }
+}
+
+export function convertToChartData(stats) {
+  return Object.keys(stats).slice(0, 3).map(statName => ({
+    id: statName,
+    value: stats[statName],
+    label: labels[statName]
+  }));
 }
