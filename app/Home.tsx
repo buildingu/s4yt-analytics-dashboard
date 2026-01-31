@@ -1,68 +1,42 @@
 'use client'
-import { Funnel } from '@nivo/funnel';
+import { FunnelChart, PieArcSeries, PieChart } from "reaviz";
+import './Home.css';
 
-export default function Home({ stats, chartData }) {
-  console.log(chartData);
+const invitersPieColors = ['#0570b0', '#d0d1e6'];
+const inviteesPieColors = ['#238b45', '#66c2a4', '#ccece6'];
 
-const customTheme = {
-    tooltip: {
-      container: {
-        color: '#000000',
-        fontSize: 16,
-      },
-    },
-    labels: {
-      text: {
-        fontSize: 20, // Adjust this value
-      },
-    },
-  };
-
+export default function Home({ chartData }) {
   return (
-    <>
-      <div>
-        <table>
-          <tbody>
-            <tr>
-              <td>Registered users</td>
-              <td>{stats.userCount}</td>
-            </tr>
-              <tr>
-              <td>Verified users</td>
-              <td>{stats.verified}</td>
-            </tr>
-            <tr>
-              <td>Logged in</td>
-              <td>{stats.loggedIn}</td>
-            </tr>
-            <tr>
-              <td>Successful invites</td>
-              <td>{stats.inviters}</td>
-            </tr>
-            <tr>
-              <td>Invited users</td>
-              <td>{stats.invitees}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <Funnel
-        data={chartData}
-        theme={customTheme}
-        width={800}
-        height={400}
-        margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
-        valueFormat="~d"
-        colors={{ scheme: 'red_yellow_blue' }}
-        borderWidth={20}
-        labelColor={{ from: 'color', modifiers: [['darker', 3]] }}
-        beforeSeparatorLength={100}
-        beforeSeparatorOffset={20}
-        afterSeparatorLength={100}
-        afterSeparatorOffset={20}
-        currentPartSizeExtension={10}
-        currentBorderWidth={40}
+    <div className="chart-container">
+      <h1>Dubl-U-nes</h1>
+      <table>
+        <tbody>
+          <tr>
+            <td>Total</td>
+            <td>{chartData.dublunes}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h1>User Funnel</h1>
+      <FunnelChart
+        height={300}
+        width={400}
+        data={chartData.funnel}
       />
-    </>
+      <h1>Invitees</h1>
+      <PieChart
+        height={300}
+        width={800}
+        data={chartData.invitees}
+        series={<PieArcSeries colorScheme={inviteesPieColors}/>}
+      />
+      <h1>Inviters</h1>
+      <PieChart
+        height={300}
+        width={800}
+        data={chartData.inviters}
+        series={<PieArcSeries colorScheme={invitersPieColors}/>}
+      />
+    </div>
   );
 }

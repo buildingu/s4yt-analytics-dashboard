@@ -1,0 +1,17 @@
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+table {
+  font-size: 1.5rem
+}
+
+td {
+  padding: 10px;
+}
