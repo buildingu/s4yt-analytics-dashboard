@@ -1,3 +1,4 @@
+import { ChartData, Transaction } from './analytics.types';
 import { getUsers } from './db';
 
 const exclusions = JSON.parse(process.env.EXCLUSIONS);
@@ -10,7 +11,7 @@ export const labels: Record<string, string> = {
   invitees: 'Invited users'
 }
 
-export async function analyzeUsers() {
+export async function analyzeUsers(): Promise<Record<string, number>> {
   const stats = {
     userCount: 0,
     verified: 0,
@@ -34,12 +35,14 @@ export async function analyzeUsers() {
       stats.dublunes += user.coins;
 
       const hasOtherInviteCode = user.inviter_referral_code;
-      if (hasOtherInviteCode) stats.inviteesPending++;
+      if (hasOtherInviteCode) {
+        stats.inviteesPending++;
+      }
 
-      const hasInviteeBonus = user.coin_transactions.some(tx => tx.source === 'invitedByExistingUser');
+      const hasInviteeBonus = user.coin_transactions.some((tx: Transaction) => tx.source === 'invitedByExistingUser');
       if (hasInviteeBonus) stats.inviteesConfirmed++;
 
-      const hasInviterBonus = user.coin_transactions.some(tx => tx.source === 'invitedNewUser');
+      const hasInviterBonus = user.coin_transactions.some((tx: Transaction)=> tx.source === 'invitedNewUser');
       if (hasInviterBonus) stats.inviters++;
     }
   } catch (err) {
@@ -49,9 +52,9 @@ export async function analyzeUsers() {
   }
 }
 
-export function convertToChartData(stats) {
+export function convertToChartData(stats: Record<string, number>): ChartData {
   return {
-    funnel: Object.keys(stats).slice(0, 3).map((statName, i) => ({
+    funnel: Object.keys(stats).slice(0, 3).map(statName => ({
       data: stats[statName],
       key: labels[statName]
     })),
@@ -62,8 +65,8 @@ export function convertToChartData(stats) {
       { key: 'No invite', data: stats.userCount - stats.inviteesConfirmed - stats.inviteesPending },
     ],
     inviters: [
-      { key: 'Successful invites', data: stats.inviters },
-      { key: 'No successful invites', data: stats.userCount - stats.inviters },
+      { key: 'Confirmed invitees', data: stats.inviters },
+      { key: 'No invites', data: stats.userCount - stats.inviters },
     ],
   }
 }

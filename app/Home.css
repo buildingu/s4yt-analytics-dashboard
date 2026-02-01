@@ -1,11 +1,36 @@
 .chart-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-areas: 
+    "a a"
+    "b b"
+    "c d";
+  grid-template-columns: auto auto;
+  place-items: center;
+}
+
+.chart-container > div {
+  padding: 20px;
+}
+
+.dublunes {
+  grid-area: a;
+}
+
+.funnel {
+  grid-area: b;
+}
+
+.invitees {
+  grid-area: c;
+}
+
+.inviters {
+  grid-area: d;
 }
 
 h1 {
   font-size: 2rem;
+  text-align: center;
 }
 
 table {
