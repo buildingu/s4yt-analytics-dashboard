@@ -65,7 +65,7 @@ export function convertToChartData(stats: Record<string, number>): ChartData {
       { key: 'No invite', data: stats.userCount - stats.inviteesConfirmed - stats.inviteesPending },
     ],
     inviters: [
-      { key: 'Confirmed invitees', data: stats.inviters },
+      { key: 'Confirmed', data: stats.inviters },
       { key: 'No invites', data: stats.userCount - stats.inviters },
     ],
   }

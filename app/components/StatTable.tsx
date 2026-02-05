@@ -1,4 +1,4 @@
-export default function StatsTable({ stats }) {
+/*export default function StatsTable({ stats }) {
   return (
     <>
       <table>
@@ -27,4 +27,4 @@ export default function StatsTable({ stats }) {
       </table>
     </>
   );
-}
+}*/
