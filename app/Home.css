@@ -1,9 +1,10 @@
 .chart-container {
   display: grid;
-  grid-template-areas: 
-    "a a"
-    "b b"
-    "c d";
+  grid-template-areas:
+    'f f'
+    'b b'
+    'a e'
+    'c d';
   grid-template-columns: auto auto;
   place-items: center;
 }
@@ -12,12 +13,29 @@
   padding: 20px;
 }
 
+.description {
+  text-align: center;
+  color: #aaa;
+}
+
+.padding-container {
+  padding: 50px;
+}
+
+.header {
+  grid-area: f;
+}
+
 .dublunes {
-  grid-area: a;
+  grid-area: b;
 }
 
 .funnel {
-  grid-area: b;
+  grid-area: a;
+}
+
+.locations {
+  grid-area: e;
 }
 
 .invitees {
@@ -29,12 +47,17 @@
 }
 
 h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+h2 {
   font-size: 2rem;
   text-align: center;
 }
 
 table {
-  font-size: 1.5rem
+  font-size: 1.5rem;
 }
 
 td {
