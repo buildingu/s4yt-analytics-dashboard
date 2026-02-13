@@ -13,11 +13,11 @@
 }
 
 .dublunes {
-  grid-area: a;
+  grid-area: b;
 }
 
 .funnel {
-  grid-area: b;
+  grid-area: a;
 }
 
 .invitees {
