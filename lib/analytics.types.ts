@@ -6,6 +6,13 @@ export type ChartData = {
   dublunes: number;
   invitees: { key: string; data: number }[];
   inviters: { key: string; data: number }[];
+  locations: {
+    key: string;
+    data: {
+      key: string;
+      data: number;
+    }[];
+  }[];
 };
 
 export type Stats = {

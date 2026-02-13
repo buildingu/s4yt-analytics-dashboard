@@ -1,8 +1,8 @@
 .chart-container {
   display: grid;
   grid-template-areas:
-    'b a'
-    'e e'
+    'b b'
+    'a e'
     'c d';
   grid-template-columns: auto auto;
   place-items: center;
@@ -10,6 +10,10 @@
 
 .chart-container > div {
   padding: 20px;
+}
+
+.padding-container {
+  padding: 50px;
 }
 
 .dublunes {
@@ -20,7 +24,7 @@
   grid-area: a;
 }
 
-.map {
+.locations {
   grid-area: e;
 }
 

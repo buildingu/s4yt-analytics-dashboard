@@ -42,6 +42,7 @@ export async function analyzeUsers(): Promise<Stats> {
         stats.inviteesPending++;
       }
 
+      // Invitations
       const hasInviteeBonus = coin_transactions.some(
         (tx: Transaction) => tx.source === 'invitedByExistingUser',
       );
@@ -52,17 +53,21 @@ export async function analyzeUsers(): Promise<Stats> {
       );
       if (hasInviterBonus) stats.inviters++;
 
-      if (!Object.hasOwn(stats.locations, country)) {
-        stats.locations[country] = {};
+      // Locations
+      const countrySanitized = country == null ? 'Unknown' : country;
+
+      if (!Object.hasOwn(stats.locations, countrySanitized)) {
+        stats.locations[countrySanitized] = {};
       }
 
-      const userCountry = stats.locations[country];
+      const countryObj = stats.locations[country];
+      const regionSanitized = region == null ? 'Unknown' : region;
 
-      if (!Object.hasOwn(userCountry, region)) {
-        userCountry[region] = 0;
+      if (!Object.hasOwn(countryObj, regionSanitized)) {
+        countryObj[regionSanitized] = 0;
       }
 
-      userCountry[region]++;
+      countryObj[regionSanitized]++;
     }
   } catch (err) {
     console.log(err);
@@ -80,8 +85,26 @@ export function convertToChartData(stats: Stats): ChartData {
     inviteesConfirmed,
     inviteesPending,
     inviters,
-    //locations,
+    locations,
   } = stats;
+
+  const locationsChartdata = [];
+
+  for (const country in locations) {
+    const regionChartData = [];
+
+    for (const region in locations[country]) {
+      regionChartData.push({
+        key: region,
+        data: locations[country][region],
+      });
+    }
+
+    locationsChartdata.push({
+      key: country,
+      data: regionChartData,
+    });
+  }
 
   return {
     funnel: [
@@ -102,5 +125,6 @@ export function convertToChartData(stats: Stats): ChartData {
       { key: 'Confirmed', data: inviters },
       { key: 'No invites', data: userCount - inviters },
     ],
+    locations: locationsChartdata,
   };
 }
