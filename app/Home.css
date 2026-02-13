@@ -1,6 +1,7 @@
 .chart-container {
   display: grid;
   grid-template-areas:
+    'f f'
     'b b'
     'a e'
     'c d';
@@ -12,8 +13,17 @@
   padding: 20px;
 }
 
+.description {
+  text-align: center;
+  color: #aaa;
+}
+
 .padding-container {
   padding: 50px;
+}
+
+.header {
+  grid-area: f;
 }
 
 .dublunes {
@@ -37,6 +47,11 @@
 }
 
 h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+h2 {
   font-size: 2rem;
   text-align: center;
 }
