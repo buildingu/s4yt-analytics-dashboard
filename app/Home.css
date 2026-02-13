@@ -1,9 +1,9 @@
 .chart-container {
   display: grid;
-  grid-template-areas: 
-    "a a"
-    "b b"
-    "c d";
+  grid-template-areas:
+    'b a'
+    'e e'
+    'c d';
   grid-template-columns: auto auto;
   place-items: center;
 }
@@ -20,6 +20,10 @@
   grid-area: a;
 }
 
+.map {
+  grid-area: e;
+}
+
 .invitees {
   grid-area: c;
 }
@@ -34,7 +38,7 @@ h1 {
 }
 
 table {
-  font-size: 1.5rem
+  font-size: 1.5rem;
 }
 
 td {

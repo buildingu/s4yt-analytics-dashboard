@@ -1,10 +1,13 @@
-'use client'
-import { FunnelChart, PieArcSeries, PieChart } from "reaviz";
+'use client';
+import { FunnelChart, Map, PieArcSeries, PieChart } from 'reaviz';
+import { feature } from 'topojson-client';
+import geojson from 'world-atlas/countries-110m.json';
 import { ChartData } from '../lib/analytics.types';
 import './Home.css';
 
 const invitersPieColors = ['#0570b0', '#d0d1e6'];
 const inviteesPieColors = ['#238b45', '#66c2a4', '#ccece6'];
+const worldData = feature(geojson, geojson.objects.countries);
 
 export default function Home({ chartData }: { chartData: ChartData }) {
   return (
@@ -23,11 +26,12 @@ export default function Home({ chartData }: { chartData: ChartData }) {
 
       <div className="funnel">
         <h1>User Funnel</h1>
-        <FunnelChart
-          height={300}
-          width={400}
-          data={chartData.funnel}
-        />
+        <FunnelChart height={300} width={400} data={chartData.funnel} />
+      </div>
+
+      <div className="map">
+        <h1>Map</h1>
+        <Map data={worldData} height={700} width={800} markers={[]} />
       </div>
 
       <div className="invitees">
@@ -36,7 +40,7 @@ export default function Home({ chartData }: { chartData: ChartData }) {
           height={300}
           width={800}
           data={chartData.invitees}
-          series={<PieArcSeries colorScheme={inviteesPieColors}/>}
+          series={<PieArcSeries colorScheme={inviteesPieColors} />}
         />
       </div>
 
@@ -46,7 +50,7 @@ export default function Home({ chartData }: { chartData: ChartData }) {
           height={300}
           width={800}
           data={chartData.inviters}
-          series={<PieArcSeries colorScheme={invitersPieColors}/>}
+          series={<PieArcSeries colorScheme={invitersPieColors} />}
         />
       </div>
     </div>
