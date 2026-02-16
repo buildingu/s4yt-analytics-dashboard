@@ -6,11 +6,14 @@ import './Home.css';
 const invitersPieColors = ['#0570b0', '#d0d1e6'];
 const inviteesPieColors = ['#238b45', '#66c2a4', '#ccece6'];
 
-export default function Home({ chartData }: { chartData: ChartData }) {
+export default function Home({ chartData, lastUpdated }: { chartData: ChartData, lastUpdated: Date }) {
+  const lastUpdateString = `${lastUpdated.toDateString()} ${lastUpdated.toTimeString()}`;
+  
   return (
     <div className="chart-container">
       <div className="header">
         <h1>Dollars For Your Thoughts ($4YT) Analytics Dashboard</h1>
+        <p className="description">Last updated: {lastUpdateString}</p>
       </div>
       <div className="dublunes">
         <h2>Dubl-U-nes</h2>
