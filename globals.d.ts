@@ -1,8 +1,7 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      DB_ADDRESS: string;
-      DB_PORT: string;
+      DB_CONNECTION: string;
       DB_NAME: string;
       DB_COLLECTION: string;
       EXCLUSIONS: string;

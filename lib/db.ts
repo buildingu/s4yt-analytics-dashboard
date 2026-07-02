@@ -1,10 +1,7 @@
 import { Collection, MongoClient } from 'mongodb';
 import { UserSchema } from './analytics.types';
 
-const { DB_USER, DB_PASSWORD, DB_ADDRESS, DB_PORT, DB_NAME } = process.env;
-const client = new MongoClient(
-  `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_ADDRESS}:${DB_PORT}/${DB_NAME}`,
-);
+const client = new MongoClient(process.env.DB_CONNECTION);
 
 async function connectToDB() {
   try {
