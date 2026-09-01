@@ -8,6 +8,9 @@ export async function analyzeUsers(): Promise<Stats> {
     userCount: 0,
     verified: 0,
     loggedIn: 0,
+    pregame: 0,
+    mainGame: 0,
+    raffle: 0,
     dublunes: 0,
     inviteesConfirmed: 0,
     inviteesPending: 0,
@@ -28,12 +31,14 @@ export async function analyzeUsers(): Promise<Stats> {
         coins,
         inviter_referral_code,
         coin_transactions,
+        chests_submitted,
         country,
         region,
       } = user;
 
       if (is_email_verified) stats.verified++;
       if (!first_login) stats.loggedIn++;
+      if (chests_submitted.length > 0) stats.pregame++;
 
       stats.dublunes += coins;
 
@@ -81,6 +86,7 @@ export function convertToChartData(stats: Stats): ChartData {
     userCount,
     verified,
     loggedIn,
+    pregame,
     dublunes,
     inviteesConfirmed,
     inviteesPending,
@@ -111,6 +117,7 @@ export function convertToChartData(stats: Stats): ChartData {
       { key: 'Registered users', data: userCount },
       { key: 'Verified users', data: verified },
       { key: 'Logged in', data: loggedIn },
+      { key: 'Pregame', data: pregame}
     ],
     dublunes: dublunes,
     invitees: [

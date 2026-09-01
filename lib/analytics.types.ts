@@ -19,6 +19,9 @@ export type Stats = {
   userCount: number;
   verified: number;
   loggedIn: number;
+  pregame: number;
+  mainGame: number;
+  raffle: number;
   dublunes: number;
   inviteesConfirmed: number;
   inviteesPending: number;
@@ -37,6 +40,7 @@ export interface UserSchema {
   email: string;
   coins: number;
   inviter_referral_code: string;
+  chests_submitted: Record<string, number>;
   coin_transactions: { source: string; count: number }[];
   country: string;
   region: string;
