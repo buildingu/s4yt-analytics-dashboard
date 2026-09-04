@@ -38,7 +38,7 @@ export async function analyzeUsers(): Promise<Stats> {
 
       if (is_email_verified) stats.verified++;
       if (!first_login) stats.loggedIn++;
-      if (chests_submitted.length > 0) stats.pregame++;
+      if (Object.keys(chests_submitted).length > 0) stats.pregame++;
 
       stats.dublunes += coins;
 
