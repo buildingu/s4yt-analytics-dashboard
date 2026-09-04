@@ -1,5 +1,5 @@
 import { ChartData, Stats, Transaction } from './analytics.types';
-import { getUsers } from './db';
+import { getData } from './db';
 
 const exclusions = JSON.parse(process.env.EXCLUSIONS);
 
@@ -19,12 +19,16 @@ export async function analyzeUsers(): Promise<Stats> {
   };
 
   try {
-    const rawUsers = await getUsers();
-    const users = rawUsers.filter(user => !exclusions.includes(user.email));
+    const data = await getData();
+    if (Array.isArray(data)) return stats;
 
-    stats.userCount = users.length;
+    const { users, answers } = data;
+    const filteredUsers = users.filter(user => !exclusions.includes(user.email));
 
-    for (const user of users) {
+    // Process Users
+    stats.userCount = filteredUsers.length;
+
+    for (const user of filteredUsers) {
       const {
         is_email_verified,
         first_login,
@@ -74,6 +78,10 @@ export async function analyzeUsers(): Promise<Stats> {
 
       countryObj[regionSanitized]++;
     }
+
+    // Process Answers
+    const uniqueUsers = new Set(answers.map(answer => answer.user.toString()));
+    stats.mainGame = uniqueUsers.size;
   } catch (err) {
     console.log(err);
   } finally {
@@ -87,6 +95,7 @@ export function convertToChartData(stats: Stats): ChartData {
     verified,
     loggedIn,
     pregame,
+    mainGame,
     dublunes,
     inviteesConfirmed,
     inviteesPending,
@@ -117,7 +126,8 @@ export function convertToChartData(stats: Stats): ChartData {
       { key: 'Registered users', data: userCount },
       { key: 'Verified users', data: verified },
       { key: 'Logged in', data: loggedIn },
-      { key: 'Pregame', data: pregame}
+      { key: 'Pregame', data: pregame},
+      { key: 'Main Game', data: mainGame}
     ],
     dublunes: dublunes,
     invitees: [

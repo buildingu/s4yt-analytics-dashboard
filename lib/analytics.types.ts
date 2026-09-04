@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 export type ChartData = {
   funnel: {
     data: number;
@@ -44,4 +46,8 @@ export interface UserSchema {
   coin_transactions: { source: string; count: number }[];
   country: string;
   region: string;
+}
+
+export interface AnswerSchema {
+  user: ObjectId;
 }

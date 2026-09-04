@@ -31,7 +31,7 @@ export default function Home({ chartData, lastUpdated }: { chartData: ChartData,
         <h2>User Funnel</h2>
         <p className="description">How many players have played the game?</p>
         <div className="padding-container">
-          <FunnelChart height={400} width={500} data={chartData.funnel} />
+          <FunnelChart height={400} width={600} data={chartData.funnel} />
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 import { Collection, MongoClient } from 'mongodb';
-import { UserSchema } from './analytics.types';
+import { AnswerSchema, UserSchema } from './analytics.types';
 
 const client = new MongoClient(process.env.DB_CONNECTION);
 
@@ -13,17 +13,24 @@ async function connectToDB() {
   }
 }
 
-export async function getUsers() {
+export async function getData() {
   try {
     await connectToDB();
 
     const db = client.db(process.env.DB_NAME);
-    const collection: Collection<UserSchema> = db.collection<UserSchema>(
-      process.env.DB_COLLECTION,
+    const usersCollection: Collection<UserSchema> = db.collection<UserSchema>(
+      'users',
+    );
+    const answersCollection: Collection<AnswerSchema> = db.collection<AnswerSchema>(
+      'answers',
     );
 
-    const users = await collection.find({}).toArray();
-    return users;
+    const users = await usersCollection.find({}).toArray();
+    const answers = await answersCollection.find({}).toArray();
+    return {
+      users,
+      answers
+    };
   } catch (err) {
     console.log(err);
     return [];
